@@ -1,18 +1,12 @@
-plugins {
-    id 'com.github.triplet.play' version '2.8.0'
-}
-
 def versionMajor = 3
 def versionMinor = 14
-def versionPatch = 0
-def versionBuild = 0
+def versionPatch = 3
+def versionBuild = 2
 
 def buildToolsVer = "28.0.3"
 def compileSdkVer = 28
 def targetSdkVer = 29
 def minSdkVer = 16
-
-def apkUrl = '"https://dl.taz.de/down/apk/"'
 
 def tazPlist = '"https://dl.taz.de/tpaperIssue.plist"'
 def tazPlistArchiv = '"https://dl.taz.de/tpaperIssue.plist?start=%1$s&end=%2$s"'
@@ -24,7 +18,7 @@ def tazResourceUrl = '"https://dl.taz.de/ressourcen"'
 def tazArchiveUrl = '"https://dl.taz.de/tpaperArchiv"'
 def tazPushRestUrl = '"https://dl.taz.de/tpaperPushInfo"'
 def tazStagingPushRestUrl = '"https://dl.taz.de/tpaperPushInfoTest"'
-def tazErrorMail = '"app@taz.de"'
+def tazErrorMail = '"app-fdroid@taz.de"'
 
 def lmdPlist = '"https://dl.monde-diplomatique.de/tpaperIssue.plist"'
 def lmdPlistArchiv = '"https://dl.monde-diplomatique.de/tpaperIssue.plist?start=%1$s&end=%2$s"'
@@ -61,36 +55,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.akaita.android.easylauncher'
 apply plugin: 'kotlin-kapt'
-
-def overheadPath
-
-File tcLocalPropsFile = project.rootProject.file('tc_local.properties')
-if (tcLocalPropsFile.exists()) {
-    logger.quiet('Found ' + tcLocalPropsFile)
-    def tcLocalProps = new Properties()
-    tcLocalProps.load(tcLocalPropsFile.newDataInputStream())
-    overheadPath = tcLocalProps.getProperty("overheadpath")
-} else {
-    logger.error('tc_local.properties not found')
-}
-
-if (overheadPath == null) {
-    overheadPath = System.getenv("overheadpath")
-}
-
-if (overheadPath != null) {
-    logger.quiet('Found ' + ":" + overheadPath)
-    project.ext.set("overheadPath", overheadPath)
-    File extraGradleFile = new File(overheadPath, project.name + ".gradle")
-    if (extraGradleFile.exists()) {
-        logger.quiet('Found ' + extraGradleFile)
-        apply from: extraGradleFile
-    } else {
-        logger.error("${extraGradleFile} not found")
-    }
-} else {
-    logger.error('overheadpath not set')
-}
 
 easylauncher {
     iconNames "@mipmap/ic_launcher_foreground" // Traditional launcher icon
@@ -132,14 +96,13 @@ android {
         minSdkVersion minSdkVer
         targetSdkVersion targetSdkVer
         versionCode versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}.${versionBuild}"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [eventBusIndex        : 'de.thecode.android.tazreader.eventbus.EventBusIndex',
                              "room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
-        buildConfigField 'String', 'APKURL', apkUrl
     }
     splits {
         abi {
@@ -249,19 +212,19 @@ android {
         variant.outputs.each { output ->
             def baseAbiVersionCode = abiCodes.get(output.getFilter(com.android.build.OutputFile.ABI))
             output.versionCodeOverride = baseAbiVersionCode * 100000000 + variant.versionCode
-            output.versionNameOverride = variant.versionName + " " + abiCodes.find { it.value == baseAbiVersionCode }.key
+            output.versionNameOverride = variant.versionName + "+fdroid+" + abiCodes.find { it.value == baseAbiVersionCode }.key
         }
     }
 
     productFlavors.all { flavor ->
         def helpDir = new File(project.projectDir, "src/${flavor.name}/assets/help")
-        def localZip = new File(project.ext.overheadPath, "temp_${flavor.name}.zip")
+        def localZip = new File("temp_${flavor.name}.zip")
         def helpDownloadTaskName = "helpDownloadFile${flavor.name.capitalize()}"
         def helpUnzipTaskName = "helpUnzipFile${flavor.name.capitalize()}"
         def helpDeleteZipTaskName = "helpDeleteZipFile${flavor.name.capitalize()}"
         def helpDeleteDirTaskName = "helpDeleteDir${flavor.name.capitalize()}"
         def downloadTask = task "${helpDownloadTaskName}"(type: Download) {
-            sourceUrl = "http://dl.taz.de/down/help/${flavor.name}.zip"
+            sourceUrl = "https://dl.taz.de/down/help/${flavor.name}.zip"
             target = localZip
         }
         def deleteZipTask = task "${helpDeleteZipTaskName}"(type: Delete) {
@@ -371,4 +334,4 @@ class Download extends DefaultTask {
     }
 }
 
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'

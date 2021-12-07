@@ -93,15 +93,7 @@
         </provider>
 
         <service
-            android:name=".firebase.TazFirebaseMessagingService"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <service android:name=".audio.AudioPlayerService" />
+                android:name=".audio.AudioPlayerService"/>
     </application>
 
 </manifest>

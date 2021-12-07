@@ -13,7 +13,6 @@
     <string name="category_notification_download">DOWNLOAD BENACHRICHTIGUNG</string>
     <string name="category_notification_download_key">catDownloadNotification</string>
     <string name="category_report_error">FEHLER MELDEN</string>
-    <string name="category_crashlogs">APP ABSTÜRZE UND FEHLER</string>
     <string name="category_storage">SPEICHER</string>
     <!--  -->
     <string name="pref_key_autoload">autoload</string>
