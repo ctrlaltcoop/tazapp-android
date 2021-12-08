@@ -1,3 +1,5 @@
+taz klassisch. Die aktuelle App finden Sie <a href="https://f-droid.org/de/packages/de.taz.android.app.free/">hier</a>.
+
 taz, die tageszeitung - Ausgaben zum Download und Offline-Lesen auf Smartphone oder Tablet.
 
 Optimiert für Android bietet die App komfortables Lesen der gesamten taz als PDF oder als optimierten Text - mit allen Regionalausgaben, der taz am Wochenende und einmal im Monat "Le Monde diplomatique". Es steht außerdem ein Archiv mit allen Ausgaben seit 2011 zur Verfügung.

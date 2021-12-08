@@ -1,1 +1,1 @@
-taz.app
+taz.app klassisch

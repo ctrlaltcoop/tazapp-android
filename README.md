@@ -1,5 +1,7 @@
 # taz.app für Android
 
+Dies ist die App taz klassisch.
+
 Täglich die neueste Ausgabe der "tageszeitung" (taz) direkt auf Ihr Smartphone oder Tablet. 
 
 Optimiert als "aPaper" für Android bietet die App komfortables Lesen der gesamten taz als PDF oder als optimierten Text - mit allen Regionalausgaben, der taz am Wochenende und einmal im Monat "Le Monde diplomatique". Für Abonnementen steht außerdem ein Archiv mit allen Ausgaben seit 2011 zur Verfügung.
