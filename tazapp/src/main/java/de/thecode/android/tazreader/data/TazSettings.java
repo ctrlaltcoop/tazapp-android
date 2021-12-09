@@ -79,6 +79,8 @@ public final class TazSettings implements SharedPreferences.OnSharedPreferenceCh
         public static final  String NOTIFICATION_PUSH           = "notification_push";
         public static final  String LOGFILE                     = "logfile";
         public static final  String DATA_FOLDER                 = "storageFolder";
+        public static final  String ASK_HELP_ALLOWED            = "askHelpAllowed";
+        public static final  String ASK_HELP_COUNTER            = "askHelpCounter";
     }
 
 
